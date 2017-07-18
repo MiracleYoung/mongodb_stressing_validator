@@ -1,0 +1,111 @@
+1. init
+./bin/ycsb load mongodb -s -P workloads/mongodb.ycsb -threads 100 -p mongodb.url=mongodb://localhost:27017/ycsb?w=0 > ycsb_validation_load_t100.log
+
+
+db.runCommand( { collMod: "usertable",
+                 validator: { $or:
+                    [
+                       { _id: { $type: "string" } }
+                    ],
+					
+                 },
+                 validationLevel: "strict",
+                 validationAction: "warn"
+
+} )
+
+
+
+2. r:0.95 i:0.05
+
+./bin/ycsb run mongodb -s -P workloads/mongodb.ycsb -threads 100 -p mongodb.url=mongodb://localhost:27017/ycsb?w=0 > ycsb_validation_run_t100_r95_i5.log
+
+recordcount=10000000
+operationcount=10000000
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+readallfields=true
+
+readproportion=0.95
+updateproportion=0
+scanproportion=0
+insertproportion=0.05
+
+requestdistribution=zipfian
+
+
+3. r:0.5 u:0.5
+
+./bin/ycsb run mongodb -s -P workloads/mongodb.ycsb -threads 100 -p mongodb.url=mongodb://localhost:27017/ycsb?w=0 > ycsb_validation_run_t100_r50_u50.log
+
+recordcount=10000000
+operationcount=10000000
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+readallfields=true
+
+readproportion=0.5
+updateproportion=0.5
+scanproportion=0
+insertproportion=0
+
+requestdistribution=zipfian
+
+
+4. r:0.7 u:0.2 i:0.1
+
+./bin/ycsb run mongodb -s -P workloads/mongodb.ycsb -threads 100 -p mongodb.url=mongodb://localhost:27017/ycsb?w=0 > ycsb_validation_run_t100_r70_u20_i10.log
+
+recordcount=10000000
+operationcount=10000000
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+readallfields=true
+
+readproportion=0.7
+updateproportion=0.2
+scanproportion=0
+insertproportion=0.1
+
+requestdistribution=zipfian
+
+
+5. r:0.1 u:0.2 i:0.7
+
+./bin/ycsb run mongodb -s -P workloads/mongodb.ycsb -threads 100 -p mongodb.url=mongodb://localhost:27017/ycsb?w=0 > ycsb_validation_run_t100_r10_u20_i70.log
+
+recordcount=10000000
+operationcount=10000000
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+readallfields=true
+
+readproportion=0.1
+updateproportion=0.2
+scanproportion=0
+insertproportion=0.7
+
+requestdistribution=zipfian
+
+
+6. r:0.1 i:0.9
+
+./bin/ycsb run mongodb -s -P workloads/mongodb.ycsb -threads 100 -p mongodb.url=mongodb://localhost:27017/ycsb?w=0 > ycsb_validation_run_t100_r10_i90.log
+
+recordcount=10000000
+operationcount=10000000
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+readallfields=true
+
+readproportion=0.1
+updateproportion=0
+scanproportion=0
+insertproportion=0.9
+
+requestdistribution=zipfian
+
+
+
+
+
